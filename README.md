@@ -48,4 +48,4 @@ longer typing in the field.
 
 Please enjoy. Pull requests et c. welcome.
 
-[1]: https://twitter.com/olebegemann/status/1146823791605112833?lang=en
+[1]: See [this stack overflow post](https://stackoverflow.com/questions/56799456/swiftui-textfield-with-formatter-not-working) and [this tweet thread](https://twitter.com/olebegemann/status/1146823791605112833?lang=en)
