@@ -23,10 +23,10 @@ decimal point handling is similarly frustrating for the user.
 If you try to deal with this problem by implementing string validation
 and conversion only when focus is lost, you are now in a position
 where your numeric state object does not reflect the most recent value
-entered by the user. This makes it impossible to type
-"12.34" and then tap a button that then consumes the converted
-decimal. More subtley, you will not be able to guard the button's
-enabled state using the strangely-negative `.disabled(BOOL)`.
+entered by the user. This makes it impossible to type "12.34" and then
+tap a button that then consumes the converted decimal. More subtley,
+you will not be able to guard the button's enabled state using
+something like `Button("Add"){ ... }.disabled(myNumber==nil)`.
 
 One way of partially mitigating some of these issues is using
 `onCommit:` but its behavaior if not broken is at least awkward. Most
@@ -48,4 +48,4 @@ longer typing in the field.
 
 Please enjoy. Pull requests et c. welcome.
 
-[1]: See [this stack overflow post](https://stackoverflow.com/questions/56799456/swiftui-textfield-with-formatter-not-working) and [this tweet thread](https://twitter.com/olebegemann/status/1146823791605112833?lang=en)
+[1]: See [this Stack Overflow post](https://stackoverflow.com/questions/56799456/swiftui-textfield-with-formatter-not-working) and [this Twitter thread](https://twitter.com/olebegemann/status/1146823791605112833?lang=en).
