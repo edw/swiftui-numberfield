@@ -27,6 +27,20 @@
 
 import SwiftUI
 
+extension UIResponder {
+    static var _currentFirstResponder: UIResponder?
+    
+    @objc func findFirstResponder(sender: UIResponder) {
+        UIResponder._currentFirstResponder = self
+    }
+    
+    static func currentFirstResponder() -> UIResponder? {
+        _currentFirstResponder = nil
+        UIApplication.shared.sendAction(#selector(UIResponder.findFirstResponder), to: nil, from: nil, for: nil)
+        return _currentFirstResponder
+    }
+}
+
 struct NumberField : View {
     let label: String
     @Binding var number: Decimal?
