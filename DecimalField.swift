@@ -77,7 +77,16 @@ struct DecimalField : View {
 struct TipCalculator: View {
     @State var dollarValue: Decimal?
     @State var tipRate: Decimal?
-    @State var totalValue: Decimal?
+    
+    var tipValue: Decimal? {
+        guard let dollarValue = self.dollarValue, let tipRate = self.tipRate else { return nil }
+        return dollarValue * tipRate
+    }
+    
+    var totalValue: Decimal? {
+        guard let dollarValue = self.dollarValue, let tipValue = self.tipValue else { return nil }
+        return dollarValue + tipValue
+    }
     
     static var currencyFormatter: NumberFormatter {
         let nf = NumberFormatter()
@@ -110,33 +119,18 @@ struct TipCalculator: View {
                     }
                 }
                 .padding()
-                Button("Add Tip") {
-                    if let dollarValue = self.dollarValue, let tipRate = self.tipRate {
-                        self.totalValue = dollarValue * (1.0 + tipRate)
-                    } else {
-                        self.totalValue = nil
-                    }
-                }
-                .padding()
+                
                 VStack {
                     HStack {
                         Text("Tip Amount")
                         Divider()
-                        if totalValue != nil {
-                            Text(Self.currencyFormatter.string(for: totalValue! - dollarValue!) ?? "-")
-                        } else {
-                            Text("-")
-                        }
+                        Text(Self.currencyFormatter.string(for: tipValue) ?? "-")
                         Spacer()
                     }
                     HStack {
                         Text("Total")
                         Divider()
-                        if totalValue != nil {
-                            Text(Self.currencyFormatter.string(for: totalValue) ?? "-")
-                        } else {
-                            Text("-")
-                        }
+                        Text(Self.currencyFormatter.string(for: totalValue) ?? "-")
                         Spacer()
                     }
                 }
