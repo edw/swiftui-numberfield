@@ -27,20 +27,6 @@
 
 import SwiftUI
 
-extension UIResponder {
-    static var _currentFirstResponder: UIResponder?
-    
-    @objc func findFirstResponder(sender: UIResponder) {
-        UIResponder._currentFirstResponder = self
-    }
-    
-    static func currentFirstResponder() -> UIResponder? {
-        _currentFirstResponder = nil
-        UIApplication.shared.sendAction(#selector(UIResponder.findFirstResponder), to: nil, from: nil, for: nil)
-        return _currentFirstResponder
-    }
-}
-
 struct DecimalField : View {
     let label: String
     @Binding var value: Decimal?
@@ -57,10 +43,7 @@ struct DecimalField : View {
         })
         
         return TextField(label, text: b, onEditingChanged: { inFocus in
-            if inFocus {
-                let textField = UIResponder.currentFirstResponder()
-                print("\(String(describing: textField))")
-            } else {
+            if !inFocus {
                 self.lastFormattedValue = self.formatter.number(from: b.wrappedValue)?.decimalValue
                 if self.lastFormattedValue != nil {
                     DispatchQueue.main.async {
