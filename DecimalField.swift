@@ -52,6 +52,12 @@ struct DecimalField : View {
                 }
             }
         })
+            .onAppear(){ // Otherwise textfield is empty when view appears
+                 print(self.value?.description ?? "no value")
+                 if let value = self.value, let valueString =  self.formatter.string(from: NSDecimalNumber(decimal: value)) {
+                     b.wrappedValue = valueString
+                 }
+            }
             .padding()
             .keyboardType(.decimalPad)
     }
