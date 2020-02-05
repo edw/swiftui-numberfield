@@ -74,14 +74,22 @@ struct DecimalField : View {
         }, onCommit: {
             self.onCommit()
         })
-            .onAppear(){ // Otherwise textfield is empty when view appears
-                self.hasInitialTextValue = true
-                // Any `textValue` from this point on is considered valid and
-                // should be synced with `value`.
-                if let value = self.value {
-                    // Synchronize `textValue` with `value`; can't be done earlier
-                    self.textValue = self.formatter.string(from: NSDecimalNumber(decimal: value)) ?? ""
+            .onReceive(Just(textValue)) {
+                guard self.hasInitialTextValue else {
+                    // We don't have a usable `textValue` yet -- bail out.
+                    return
                 }
+                // This is the only place we update `value`.
+                self.value = self.formatter.number(from: $0)?.decimalValue
+        }
+        .onAppear(){ // Otherwise textfield is empty when view appears
+            self.hasInitialTextValue = true
+            // Any `textValue` from this point on is considered valid and
+            // should be synced with `value`.
+            if let value = self.value {
+                // Synchronize `textValue` with `value`; can't be done earlier
+                self.textValue = self.formatter.string(from: NSDecimalNumber(decimal: value)) ?? ""
+            }
         }
         .keyboardType(.decimalPad)
     }
