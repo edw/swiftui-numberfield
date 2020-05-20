@@ -7,7 +7,7 @@ this writing, the native support for `numberFormatter`s in
 
 Various folks[1] have suggested that the way around this is to create
 a `Binding<String>` that manages conversion between string and numeric
-values. This is indeed possible -- and is part of what this code
+values. This is indeed possible – and is part of what this code
 does. But there is currently an additional problem with `TextField`,
 and IIRC, it's also a maddening problem with `UITextField` in UIKit:
 Input validation (and the associated conversion of string to numeric
@@ -46,6 +46,6 @@ per-keystroke basis but you do not want to use that conversion to
 update the text field string contents until after the user is no
 longer typing in the field.
 
-Please enjoy. Pull requests et c. welcome.
+Please enjoy. Pull requests etc. welcome.
 
 [1]: See [this Stack Overflow post](https://stackoverflow.com/questions/56799456/swiftui-textfield-with-formatter-not-working) and [this Twitter thread](https://twitter.com/olebegemann/status/1146823791605112833?lang=en).

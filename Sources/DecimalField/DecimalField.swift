@@ -28,12 +28,12 @@
 import SwiftUI
 import Combine
 
-struct DecimalField : View {
-    let label: LocalizedStringKey
-    @Binding var value: Decimal?
-    let formatter: NumberFormatter
-    let onEditingChanged: (Bool) -> Void
-    let onCommit: () -> Void
+public struct DecimalField: View {
+    public let label: LocalizedStringKey
+    @Binding public var value: Decimal?
+    public let formatter: NumberFormatter
+    public let onEditingChanged: (Bool) -> Void
+    public let onCommit: () -> Void
 
     // The text shown by the wrapped TextField. This is also the "source of
     // truth" for the `value`.
@@ -44,7 +44,7 @@ struct DecimalField : View {
     // before the view is fully initialized.
     @State private var hasInitialTextValue = false
 
-    init(
+    public init(
         _ label: LocalizedStringKey,
         value: Binding<Decimal?>,
         formatter: NumberFormatter,
@@ -58,7 +58,7 @@ struct DecimalField : View {
         self.onCommit = onCommit
     }
 
-    var body: some View {
+    public var body: some View {
         TextField(label, text: $textValue, onEditingChanged: { isInFocus in
             // When the field is in focus we replace the field's contents
             // with a plain unformatted number. When not in focus, the field
@@ -74,15 +74,16 @@ struct DecimalField : View {
         }, onCommit: {
             self.onCommit()
         })
-            .onReceive(Just(textValue)) {
-                guard self.hasInitialTextValue else {
-                    // We don't have a usable `textValue` yet -- bail out.
-                    return
-                }
-                // This is the only place we update `value`.
-                self.value = self.formatter.number(from: $0)?.decimalValue
+        .onReceive(Just(textValue)) {
+            guard self.hasInitialTextValue else {
+                // We don't have a usable `textValue` yet -- bail out.
+                return
+            }
+            // This is the only place we update `value`.
+            self.value = self.formatter.number(from: $0)?.decimalValue
         }
-        .onAppear(){ // Otherwise textfield is empty when view appears
+        .onAppear() {
+            // Otherwise textfield is empty when view appears
             self.hasInitialTextValue = true
             // Any `textValue` from this point on is considered valid and
             // should be synced with `value`.
