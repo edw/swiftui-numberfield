@@ -96,7 +96,9 @@ struct DecimalField : View {
                     return
                 }
                 // This is the only place we update `value`.
-                self.value = self.formatter.number(from: $0)?.decimalValue
+                if self.value != self.formatter.number(from: $0)?.decimalValue {
+                    self.value = self.formatter.number(from: $0)?.decimalValue
+                }
         }
             .onAppear(){ // Otherwise textfield is empty when view appears
                 self.hasInitialTextValue = true
